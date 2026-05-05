@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <h1>Search / Filter</h1>
+  <form method="get" action="{{ url_for('search') }}" class="filter-row">
+    <input type="text" name="q" value="{{ q }}" placeholder="AND / OR / NOT supported">
+    <button type="submit">Apply</button>
+  </form>
+
+  <div class="filter-actions">
+    <form method="get" action="{{ url_for('add_filter_keyword') }}" class="filter-row inline">
+      <input type="hidden" name="target" value="search">
+      <input type="hidden" name="q" value="{{ q }}">
+      <input type="text" name="kw" placeholder="Add keyword (AND)">
+      <button type="submit">Add</button>
+    </form>
+    <form method="get" action="{{ url_for('remove_filter_keyword') }}" class="filter-row inline">
+      <input type="hidden" name="target" value="search">
+      <input type="hidden" name="q" value="{{ q }}">
+      <input type="text" name="kw" placeholder="Remove keyword">
+      <button type="submit">Remove</button>
+    </form>
+  </div>
+
+  <p class="small">Active filter: <code>{{ q or '(none)' }}</code></p>
+</section>
+
+<section class="panel">
+  <h2>Matching Files ({{ rows|length }})</h2>
+  <table>
+    <thead><tr><th>#</th><th>Top Folder</th><th>Rel Path</th><th>File</th><th>Hits</th><th>Action</th></tr></thead>
+    <tbody>
+    {% for row in rows %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ row.top_folder }}</td>
+        <td>{{ row.rel_path or '.' }}</td>
+        <td>{{ row.file_name }}</td>
+        <td>{{ row.hits }}</td>
+        <td>
+          <a href="{{ url_for('snippets', q=q, top_folder=row.top_folder, rel_path=row.rel_path, file_name=row.file_name) }}">View snippets</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

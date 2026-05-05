@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <h1>Context Snippets</h1>
+  <p><strong>Top folder:</strong> {{ top_folder }}</p>
+  <p><strong>Relative path:</strong> {{ rel_path or '.' }}</p>
+  <p><strong>File:</strong> {{ file_name }}</p>
+  <p><strong>Absolute path:</strong> <code>{{ abs_path }}</code></p>
+
+  <div class="actions">
+    <a href="{{ url_for('search', q=q) }}">Back to search</a>
+    {% if exists %}
+      <a href="{{ url_for('open_file', q=q, top_folder=top_folder, rel_path=rel_path, file_name=file_name) }}">Open file (if enabled)</a>
+    {% endif %}
+  </div>
+
+  <p class="small">Filter: <code>{{ q or '(none)' }}</code></p>
+</section>
+
+<section class="panel">
+  <h2>Snippets ({{ rows|length }})</h2>
+  <ol class="snippets">
+    {% for row in rows %}
+      <li>{{ row.sentence }}</li>
+    {% endfor %}
+  </ol>
+</section>
+{% endblock %}

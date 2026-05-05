@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <h1>Overview</h1>
+  <div class="stats">
+    <div class="stat"><span>Files</span><strong>{{ stats.files }}</strong></div>
+    <div class="stat"><span>Word rows</span><strong>{{ stats.words }}</strong></div>
+    <div class="stat"><span>Entity rows</span><strong>{{ stats.entities }}</strong></div>
+    <div class="stat"><span>Co-occurrence rows</span><strong>{{ stats.pairs }}</strong></div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Active Filter</h2>
+  <form method="get" action="{{ url_for('search') }}" class="filter-row">
+    <input type="text" name="q" value="{{ q }}" placeholder="Example: nasa AND moon NOT mars">
+    <button type="submit">Search</button>
+  </form>
+  <form method="get" action="{{ url_for('add_filter_keyword') }}" class="filter-row inline">
+    <input type="hidden" name="target" value="home">
+    <input type="hidden" name="q" value="{{ q }}">
+    <input type="text" name="kw" placeholder="Add keyword (AND)">
+    <button type="submit">Add</button>
+  </form>
+  <form method="get" action="{{ url_for('remove_filter_keyword') }}" class="filter-row inline">
+    <input type="hidden" name="target" value="home">
+    <input type="hidden" name="q" value="{{ q }}">
+    <input type="text" name="kw" placeholder="Remove keyword">
+    <button type="submit">Remove</button>
+  </form>
+</section>
+
+<section class="grid2">
+  <div class="panel">
+    <h2>Top Words</h2>
+    <table>
+      <thead><tr><th>#</th><th>Word</th><th>Total</th><th>Files</th></tr></thead>
+      <tbody>
+      {% for row in top_words %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ row.word }}</td>
+          <td>{{ row.total_count }}</td>
+          <td>{{ row.file_count }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2>Top Entities</h2>
+    <table>
+      <thead><tr><th>#</th><th>Entity</th><th>Label</th><th>Mentions</th><th>Files</th></tr></thead>
+      <tbody>
+      {% for row in top_entities %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ row.entity }}</td>
+          <td>{{ row.label }}</td>
+          <td>{{ row.total_count }}</td>
+          <td>{{ row.file_count }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

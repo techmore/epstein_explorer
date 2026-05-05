@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <h1>Entity Correlations</h1>
+  <p class="small">Pairs that appear together most often.</p>
+  <table>
+    <thead><tr><th>#</th><th>Entity 1</th><th>Entity 2</th><th>Co-mentions</th><th>Files</th></tr></thead>
+    <tbody>
+    {% for row in rows %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ row.entity1 }}</td>
+        <td>{{ row.entity2 }}</td>
+        <td>{{ row.total_count }}</td>
+        <td>{{ row.files }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

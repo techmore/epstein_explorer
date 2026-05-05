@@ -1,0 +1,27 @@
+# Python / local environment
+.venv/
+__pycache__/
+*.py[cod]
+
+# macOS / local indexing metadata
+.DS_Store
+.metadata_never_index
+
+# Generated SQLite databases and compressed DB exports
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.zst
+
+# Large source dataset folders.
+# These are documented in README.md and should be stored outside GitHub
+# or published via a data host such as S3, DigitalOcean Spaces, Backblaze B2,
+# Hugging Face Datasets, or Git LFS if you intentionally accept LFS limits.
+DataSet*/
+VOL*/
+dataset9-more-complete/
+
+# Temporary audit output
+*.tmp
+*.temp

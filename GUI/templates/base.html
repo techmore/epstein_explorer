@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title or "Training Data GUI" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">TRAINING_DATA_GUI</div>
+    <nav>
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('search', q=request.args.get('q', '')) }}">Search</a>
+      <a href="{{ url_for('correlations') }}">Correlations</a>
+      <a href="{{ url_for('health') }}">Health</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="meta">
+      <div><strong>DB:</strong> {{ db_path }}</div>
+      <div><strong>Root:</strong> {{ root_path }}</div>
+    </section>
+
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
